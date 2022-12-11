@@ -1,0 +1,37 @@
+---
+- name: Ensure ~/.local/bin exists
+  ansible.builtin.file:
+    path: "{{ ansible_user_dir }}/.local/bin"
+    state: directory
+    mode: 0700
+  become: true
+  become_user: "{{ username }}"
+
+- name: Install from source
+  ansible.builtin.script:
+    cmd: install_starship.sh --bin-dir "{{ ansible_user_dir }}/.local/bin" --force
+    creates: "{{ ansible_user_dir }}/.local/bin/starship"
+  become: true
+  become_user: "{{ username }}"
+
+- name: Make sure that the config dir exists
+  become: true
+  become_user: "{{ username }}"
+  ansible.builtin.file:
+    path: "~{{ username }}/.config"
+    owner: "{{ username }}"
+    group: "{{ username }}"
+    state: directory
+    mode: 0755
+
+- name: Add autoload for starship to bashrc
+  become: true
+  become_user: "{{ username }}"
+  ansible.builtin.blockinfile:
+    path: "~{{ username }}/.bashrc"
+    block: |
+      eval "$(starship init bash)"
+    create: true
+    owner: "{{ username }}"
+    group: "{{ username }}"
+    mode: 0755

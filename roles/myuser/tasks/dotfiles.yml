@@ -1,0 +1,10 @@
+---
+- name: Ensure dotfiles are set up from public repository
+  ansible.builtin.include_role:
+    name: geerlingguy.dotfiles
+  vars:
+    dotfiles_repo_local_destination: "~/.dotfiles"
+    dotfiles_files:
+      - .config/starship.toml
+    dotfiles_repo: "https://github.com/galbitz/dotfiles.git"
+    dotfiles_repo_version: main
