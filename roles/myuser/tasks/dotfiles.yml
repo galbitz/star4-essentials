@@ -3,8 +3,9 @@
   ansible.builtin.include_role:
     name: geerlingguy.dotfiles
   vars:
-    dotfiles_repo_local_destination: "~/.dotfiles"
+    dotfiles_repo_local_destination: "{{ created_user.home }}/.dotfiles"
     dotfiles_files:
       - .config/starship.toml
     dotfiles_repo: "https://github.com/galbitz/dotfiles.git"
     dotfiles_repo_version: main
+    dotfiles_home: "{{ created_user.home }}/"

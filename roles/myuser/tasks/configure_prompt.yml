@@ -1,16 +1,18 @@
 ---
 - name: Ensure ~/.local/bin exists
   ansible.builtin.file:
-    path: "{{ ansible_user_dir }}/.local/bin"
+    path: "{{ created_user.home }}/.local/bin"
     state: directory
+    owner: "{{ username }}"
+    group: "{{ username }}"
     mode: 0700
   become: true
   become_user: "{{ username }}"
 
 - name: Install from source
   ansible.builtin.script:
-    cmd: install_starship.sh --bin-dir "{{ ansible_user_dir }}/.local/bin" --force
-    creates: "{{ ansible_user_dir }}/.local/bin/starship"
+    cmd: install_starship.sh --bin-dir "{{ created_user.home }}/.local/bin" --force
+    creates: "{{ created_user.home }}/.local/bin/starship"
   become: true
   become_user: "{{ username }}"
 
@@ -18,7 +20,7 @@
   become: true
   become_user: "{{ username }}"
   ansible.builtin.file:
-    path: "~{{ username }}/.config"
+    path: "{{ created_user.home }}/.config"
     owner: "{{ username }}"
     group: "{{ username }}"
     state: directory
@@ -28,7 +30,7 @@
   become: true
   become_user: "{{ username }}"
   ansible.builtin.blockinfile:
-    path: "~{{ username }}/.bashrc"
+    path: "{{ created_user.home }}/.bashrc"
     block: |
       eval "$(starship init bash)"
     create: true
