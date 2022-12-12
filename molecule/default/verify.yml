@@ -1,0 +1,18 @@
+---
+- name: Verify
+  hosts: all
+  tasks:
+    - name: Register user dotfile
+      ansible.builtin.stat:
+        path: /home/gabor/.config/starship.toml
+      register: dotfile_result_user
+    - name: Assert dotfile exists for user
+      ansible.builtin.assert:
+        that: dotfile_result_user.stat.exists
+    - name: Register root dotfile
+      ansible.builtin.stat:
+        path: /root/.config/starship.toml
+      register: dotfile_result_root
+    - name: Assert dotfile does not exist for root
+      ansible.builtin.assert:
+        that: not dotfile_result_root.stat.exists
