@@ -32,6 +32,7 @@
   ansible.builtin.blockinfile:
     path: "{{ created_user.home }}/.bashrc"
     block: |
+      PATH=$PATH:$HOME/.local/bin
       eval "$(starship init bash)"
     create: true
     owner: "{{ username }}"
