@@ -1,11 +1,22 @@
 ---
-- name: Ensure dotfiles are set up from public repository
-  ansible.builtin.include_role:
-    name: geerlingguy.dotfiles
+- name: Clone dotfiles repo
   vars:
-    dotfiles_repo_local_destination: "{{ created_user.home }}/.dotfiles"
-    dotfiles_files:
-      - .config/starship.toml
+    dotfiles_repo_local_destination: "{{ created_user.home }}/dotfiles"
     dotfiles_repo: "https://github.com/galbitz/dotfiles.git"
     dotfiles_repo_version: main
-    dotfiles_home: "{{ created_user.home }}/"
+  ansible.builtin.git:
+    repo: "{{ dotfiles_repo }}"
+    dest: "{{ dotfiles_repo_local_destination }}"
+    version: "{{ dotfiles_repo_version }}"
+    accept_hostkey: false
+  become: true
+  become_user: "{{ username }}"
+
+- name: Install dotfiles
+  vars:
+    dotfiles_repo_local_destination: "{{ created_user.home }}/dotfiles"
+  ansible.builtin.command:
+    cmd: "{{ dotfiles_repo_local_destination }}/install.sh"
+    creates: "{{ created_user.home }}/.bashrc_extra"
+  become: true
+  become_user: "{{ username }}"
