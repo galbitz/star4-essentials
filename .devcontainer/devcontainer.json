@@ -6,13 +6,15 @@
 	"image": "mcr.microsoft.com/devcontainers/base:jammy",
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
-	// "features": {},
+	"features": {
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {}
+	},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "sudo apt update; sudo apt install python3-pip -y; python3 -m pip install --user -U ansible ansible-lint yamllint pre-commit; pre-commit install"
+	"postCreateCommand": "sudo apt update; sudo apt install python3-pip -y; python3 -m pip install --user -U ansible ansible-lint yamllint pre-commit molecule[docker]; pre-commit install"
 
 	// Configure tool-specific properties.
 	// "customizations": {},
