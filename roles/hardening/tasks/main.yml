@@ -7,3 +7,32 @@
     state: present
   become: true
   notify: Restart ssh
+
+- name: Copy ca cert (cloudflare)
+  ansible.builtin.copy:
+    dest: "/etc/ssh/ca.pub"
+    src: "ca.pub"
+    owner: "root"
+    group: "root"
+    mode: 0644
+  become: true
+  notify: Restart ssh
+
+- name: Allow short lived cert auth
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    line: TrustedUserCAKeys /etc/ssh/ca.pub
+    state: present
+  become: true
+  notify: Restart ssh
+
+- name: Allow matching galbitz to gabor
+  ansible.builtin.blockinfile:
+    path: /etc/ssh/sshd_config
+    block: |
+      Match user galbitz
+        AuthorizedPrincipalsCommand /bin/echo 'gabor'
+        AuthorizedPrincipalsCommandUser nobody
+    state: present
+  become: true
+  notify: Restart ssh
