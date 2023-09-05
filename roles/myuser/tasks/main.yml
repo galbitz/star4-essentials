@@ -7,6 +7,8 @@
       - wget
       - git
       - sudo
+      - tmux
+      - htop
     state: present
 
 - name: Create user
