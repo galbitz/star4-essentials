@@ -7,8 +7,8 @@ name: CI
       - main
 
 jobs:
-  lint:
-    name: Lint
+  test:
+    name: Linting and Testing
     runs-on: ubuntu-latest
     steps:
       - name: Check out the codebase.

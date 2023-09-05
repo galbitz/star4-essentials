@@ -9,6 +9,7 @@
     dest: "{{ dotfiles_repo_local_destination }}"
     version: "{{ dotfiles_repo_version }}"
     accept_hostkey: false
+  register: git_results
   become: true
   become_user: "{{ username }}"
 
@@ -18,5 +19,6 @@
   ansible.builtin.command:
     cmd: "{{ dotfiles_repo_local_destination }}/install.sh"
     creates: "{{ created_user.home }}/.bashrc_extra"
+  when: git_results.changed
   become: true
   become_user: "{{ username }}"
