@@ -12,6 +12,14 @@
   become: true
   register: created_user
 
+- name: Disable sudo explicit group check
+  ansible.builtin.lineinfile:
+    dest: /etc/sudoers
+    regexp: "^Defaults\\s*verifypw"
+    line: "Defaults verifypw=any"
+    state: present
+  become: true
+
 - name: Add authorized keys from github
   ansible.posix.authorized_key:
     user: "{{ username }}"

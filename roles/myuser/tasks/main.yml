@@ -6,6 +6,7 @@
       - curl
       - wget
       - git
+      - sudo
     state: present
 
 - name: Create user
