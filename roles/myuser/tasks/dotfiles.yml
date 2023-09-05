@@ -19,6 +19,6 @@
   ansible.builtin.command:
     cmd: "{{ dotfiles_repo_local_destination }}/install.sh"
     creates: "{{ created_user.home }}/.bashrc_extra"
-  when: git_results.changed
+  when: git_results.changed # noqa: no-handler
   become: true
   become_user: "{{ username }}"
