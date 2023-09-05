@@ -1,0 +1,18 @@
+---
+- name: Install nullmailer and req
+  ansible.builtin.package:
+    name:
+      - mailutils
+      - nullmailer
+    state: present
+  become: true
+
+- name: Config nullmailer
+  ansible.builtin.template:
+    src: remotes.j2
+    dest: "/etc/nullmailer/remotes"
+    owner: mail
+    group: mail
+    mode: u+rw,g-rwx,o-rwx
+    force: true
+  become: true

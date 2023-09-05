@@ -6,6 +6,9 @@ Unattended-Upgrade::Remove-Unused-Kernel-Packages "true";
 Unattended-Upgrade::Remove-New-Unused-Dependencies "true";
 Unattended-Upgrade::Remove-Unused-Dependencies "true"; 
 
+Unattended-Upgrade::Mail "{{ security_notification_email }}";
+Unattended-Upgrade::MailReport "always";
+
 UUnattended-Upgrade::Origins-Pattern {
         "origin=*";
 };
