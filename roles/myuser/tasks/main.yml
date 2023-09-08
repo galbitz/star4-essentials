@@ -9,7 +9,9 @@
       - sudo
       - tmux
       - htop
+      - acl
     state: present
+  become: true
 
 - name: Create user
   ansible.builtin.include_tasks: create_user.yml
