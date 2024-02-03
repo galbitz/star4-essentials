@@ -7,7 +7,7 @@ Unattended-Upgrade::Remove-New-Unused-Dependencies "true";
 Unattended-Upgrade::Remove-Unused-Dependencies "true"; 
 
 Unattended-Upgrade::Mail "{{ security_notification_email }}";
-Unattended-Upgrade::MailReport "always";
+Unattended-Upgrade::MailReport "only-on-error";
 
 Unattended-Upgrade::Origins-Pattern {
         "origin=*";
