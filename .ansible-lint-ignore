@@ -1,0 +1,4 @@
+# This file contains ignores rule violations for ansible-lint
+roles/autoupdate/defaults/main.yml var-naming[no-role-prefix]
+roles/forwardmta/defaults/main.yml var-naming[no-role-prefix]
+roles/myuser/defaults/main.yml var-naming[no-role-prefix]
